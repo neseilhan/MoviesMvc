@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -19,6 +20,28 @@ namespace MoviesMvc.Models
         public string ProductionYear { get; set; }
 
         public double? BoxOfficeReturn { get; set; }
-        public List<int> DirectorIds { get; set; }
+
+        public List<DirectorModel> Directors { get; set; }
+
+        private string _directorNamesHtml;
+        [DisplayName("Directors")]
+        public string DirectorNamesHtml
+        {
+            get
+            {
+                _directorNamesHtml = "";
+                if (Directors != null && Directors.Count > 0)
+                {
+                    foreach (DirectorModel directormodel in Directors)
+                    {
+                        _directorNamesHtml += directormodel.Name + "" + directormodel.Surname + "<br />";
+                    }
+
+                }
+                return _directorNamesHtml;
+            }
+        }
+        public List<ReviewModel> Reviews { get; set; }
+        public List<int> DirectorId { get; set; }
     }
 }

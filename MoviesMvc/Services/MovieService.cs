@@ -56,7 +56,7 @@ namespace MoviesMvc.Services
                     //  }
                     //  ).ToList()
 
-                    MovieDirectors = (model.DirectorIds ?? new List<int>()).Select(directorId => new MovieDirector() //directorID nullsa bana boş 
+                    MovieDirectors = (model.DirectorId ?? new List<int>()).Select(directorId => new MovieDirector() //directorID nullsa bana boş 
                     //bir int liste oluştur
                     {
                         DirectorId = directorId

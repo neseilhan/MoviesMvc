@@ -106,7 +106,7 @@ namespace MoviesMvc.Controllers
                 Name = Name,
                 BoxOfficeReturn = BoxOfficeReturn,
                 ProductionYear = ProductionYear,
-                DirectorIds = DirectorIds
+                DirectorId = DirectorIds
             };
             _movieService.Add(model); //servisi modele gönderdik modeli entitye dönüştürüp veritabanına ekleyecek. 
             return RedirectToAction("List");
