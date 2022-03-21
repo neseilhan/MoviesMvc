@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Basic Javascript</title>
+    <script>
+        var isim = "Nese İlhan";
+        //alert(isim);
+        console.log(isim); // konsola yazdırdı debug islemleri icin kullanılabilir.
+
+        topla(10, 7);
+        function topla(no1, no2) {
+            console.log("Toplam: " +(no1 + no2));
+        }
+        function carp(no1, no2) {
+            return no1 * no2;
+        }
+        var carpim = carp(5, 6);
+
+        console.log("Carpim: " + carpim);
+    </script>
+    <script>
+        var sayi1 = 1;
+        var sayi2 = 2;
+        var sonuc = hangisiBuyuk(sayi1, sayi2);
+
+        
+        if (sonuc == null) {
+            console.log("iki sayi eşit.");
+        }
+            else {
+            console.log(sonuc + " daha buyuk");
+            }
+        function hangisiBuyuk(sayi1, sayi2) {
+            if (sayi1 > sayi2) {
+                return sayi1;
+            }
+
+            else if (sayi2 > sayi1) {
+                return sayi2;
+            } else {
+               // if (sayi1 === sayi2) {
+                return null;
+            }
+           x
+        }
+    </script>
+    <script src="BasicJavaScript.js"></script>
+</head>
+<body onload="onLoadUcgenDoldur('+',8);">
+    <textarea id ="mytextareaid" name="mytextarea" rows="10" cols="50"></textarea>
+  <br />
+    <button id="bucgenDoldur" onclick="onClickUcgenDoldur('+', 8);">
+        
+        Uçgeni Ters Çevir
+    </button>
+</body>
+</html>

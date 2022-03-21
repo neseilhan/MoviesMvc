@@ -1,0 +1,35 @@
+﻿@model List<MovieModel>
+
+@{
+    ViewBag.Title = "Movies";
+}
+
+<h2>@ViewBag.Title</h2>
+@*<a href="/Movies/Create">New Movie</a>*@
+@Html.ActionLink("New Movie", "Create")
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Production Year</th>
+            <th>Box Office Return</th>
+        </tr>
+      
+    </thead>
+    <tbody>
+        @foreach (MovieModel movie in Model)
+        {
+            <tr>
+                <td>@movie.Name</td>
+                <td>@movie.ProductionYear</td>
+                <td>@movie.BoxOfficeReturn</td>
+                <td>
+                    @*<a href="/Movies/Details/@movie.Id" >Details</a>*@ 
+                    @Html.ActionLink("Details", "Details", new{movie.Id})
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

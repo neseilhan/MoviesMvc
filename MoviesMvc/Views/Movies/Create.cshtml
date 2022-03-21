@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "Create New Movie";
+    List<int> years = ViewBag.Years as List<int>;
+    List<DirectorModel> directors = ViewBag.Directors as List<DirectorModel>;
+    
+}
+<form action="/Movies/Create" method="post">
+
+    <div class="form-group row">
+        <label for="tbName" class="col-2 col-form-label">Name</label>
+        <div class="col-10">
+            <input type="text" class="form-control" id="rbName" placeholder="Enter movie name." name="Name" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="tbBoxOfficeReturn" class="col-2 col-form-label">Box Office Return</label>
+        <div class="col-10">
+            <input type="text" class="form-control" id="tbBoxOfficeReturn" placeholder="Enter Box Office Return." name="BoxOfficeReturn" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="tbBoxOfficeReturn" class="col-2 col-form-label">Production Year</label>
+        <div class="col-10">
+            <select id="ddlProductionYear" class="form-control" name="ProductionYear">
+                <option value="">----Select Year----</option>
+
+                @*@for (int year = DateTime.Now.Year +1; year>= 1950; year--) //yıl listesinin controllerını oluşturacagız
+                    {
+                        <option value="@year" >@year</option>
+                    }*@
+
+                @foreach (int year in years)
+                {
+                    <option value="@year">@year</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="lbDirectors" class="col-2 col-form-label">Directors</label>
+        <div class="col-10">
+            <select multiple class="form-control" name="DirectorIds">
+               @foreach(DirectorModel director in directors)
+            {
+                <option value="@director.Id">
+                  @(director.Name + " " + director.Surname)
+                </option>
+            }
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="">
+            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="reset" class="btn btn-warning">Reset</button>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</form>

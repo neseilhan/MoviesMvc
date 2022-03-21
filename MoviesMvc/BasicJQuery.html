@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Basic jQuery</title>
+
+    <!--<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+    <script src="Scripts/jquery-3.6.0.min.js"></script>
+
+    <script src="Basicjquery1.js"></script>
+
+    <script>
+        //$(function() {
+        //    alert("Document loaded.");
+        //    console.log("Document loaded.");
+        //});
+        $(document).ready(function () {
+            //alert("Document loaded.");
+            console.log("Document loaded.");
+
+            $("button").click(function () {
+                $("p").hide();
+                //$("p").show();
+            });
+
+            $('#myaid').click(function (event) {
+                event.preventDefault();
+                //$("#mylabelid").toggle("slow");
+                //$("#mylabelid").toggle("fast");
+                $("#mylabelid").toggle(1000);
+            });
+
+            $("#bSave").click(function () {
+                var adi = $("#tbAdi").val();
+                var soyadi = $("#tbSoyadi").val();
+                var no = $("#tbNo").val();
+                var lSaveResult = $("#lSaveResult");
+                //if (adi.trim() == "" || soyadi.trim() == "" || no.trim() == "") {
+                //    lSaveResult.text("Adı, soyadı ve no boş olamaz!");
+                //} else {
+                //    lSaveResult.text("Adı: " + adi + ", soyadı: " + soyadi + ", no: " + no +
+                //        " olan öğrenci başarıyla kaydedildi.");
+
+                //}
+
+                var emptyFound = false;
+                $(".myinputclass").each(function () {
+                    if ($(this).val().trim() == "") {
+                        emptyFound = true;
+                    }
+                });
+                if (emptyFound) {
+                    lSaveResult.text("Adı, soyadı ve no boş olamaz!");
+                    lSaveResult.css("color", "red");
+                } else {
+                    lSaveResult.text("Adı: " + adi + ", soyadı: " + soyadi + ", no: " + no +
+                        " olan öğrenci başarıyla kaydedildi.");
+                    lSaveResult.css("color", "green").slideUp(1000).slideDown(1000);
+                }
+            });
+
+            $("#lDdlSehir").text("Şehir seçiniz...");
+            $("#ddlSehir").change(function () {
+                if ($("#ddlSehir").val() === "") {
+                    $("#lDdlSehir").text("Şehir seçiniz...");
+                } else {
+                    $("#lDdlSehir").text("Seçili değer: " + $("#ddlSehir").val());
+                }
+            });
+
+            $("#cbMutlu").prop("checked", true);
+            $("#sMutlu").text(":)");
+            $("#cbMutlu").change(function () {
+                if ($("#cbMutlu").prop("checked") == true) {
+                    $("#sMutlu").text(":)");
+                } else {
+                    $("#sMutlu").text(":(");
+                }
+            });
+
+            $("#rIzmir").prop("checked", true);
+            $("#rIstanbul").prop("checked", false);
+            $("#rAnkara").prop("checked", false);
+            /*$("#lRblSehirler").text("Seçili değer: " + $('input[name=rblSehirler]:checked').val());*/
+            $("#lRblSehirler").text("Seçili şehir: İzmir");
+            $('input[name=rblSehirler').off('change');
+            $('input[name=rblSehirler]').on("change", function () {
+                var seciliSehirValue = $('input[name=rblSehirler]:checked').val();
+                //$("#lRblSehirler").text(seciliSehirValue);
+                switch (seciliSehirValue) {
+                    case "6": $("#lRblSehirler").text("Seçili şehir: Ankara");
+                        break;
+                    case "34": $("#lRblSehirler").text("Seçili şehir: İstanbul");
+                        break;
+                    default: $("#lRblSehirler").text("Seçili şehir: İzmir");
+                        break;
+                }
+            });
+
+            $(".lbSehirler").change(function () {
+                var sehirler = seciliSehirleriGetir();
+                $("#sLbSeciliSehirler").text(sehirler);
+            });
+            $("#bSeciliSehirleriGetir").click(function () {
+                var sehirler = seciliSehirleriGetir();
+                $("#sLbSeciliSehirler").text(sehirler);
+            });
+            $("#bSeciliSehirleriTemizle").click(function () {
+                $(".lbSehirler").find("option").prop("selected", false);
+                $("#sLbSeciliSehirler").text("");
+            });
+        });
+
+        function seciliSehirleriGetir() {
+            var sehirler = "";
+            var seciliSehirler = $(".lbSehirler").val();
+            if (seciliSehirler.length > 0) {
+                for (var i = 0; i < seciliSehirler.length; i++) {
+                    sehirler += seciliSehirler[i] + ", ";
+                }
+                sehirler = sehirler.substr(0, sehirler.length - 2); // 6, 34, -> 6, 34
+            }
+            return sehirler;
+        }
+    </script>
+
+</head>
+<body>
+    <p>jQuery</p>
+    <button>Hide jQuery</button>
+    <hr />
+    <label id="mylabelid">Oley, hafata sonu geldi!</label>
+    <br />
+    <a id="myaid" href="">Yukarıdaki yazıyı göster / gizle</a>
+    <hr />
+    <table border="1">
+        <tr>
+            <td>
+                Öğrenci Adı:
+            </td>
+            <td>
+                <input type="text" id="tbAdi" class="myinputclass" width="250" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Öğrenci Soyadı:
+            </td>
+            <td>
+                <input type="text" id="tbSoyadi" class="myinputclass" width="250" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Öğrenci No:
+            </td>
+            <td>
+                <input type="text" id="tbNo" class="myinputclass" width="250" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="button" id="bSave" value="Kaydet" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <label id="lSaveResult"></label>
+            </td>
+        </tr>
+    </table>
+    <hr />
+    <select id="ddlSehir">
+        <option value="" selected>-- Seçiniz --</option>
+        <option value="6">Ankara</option>
+        <option value="34">İstanbul</option>
+        <option value="35">İzmir</option>
+    </select>
+    <br />
+    <label id="lDdlSehir"></label>
+    <hr />
+    <input type="checkbox" id="cbMutlu" />&nbsp;Mutlu musun?
+    <br />
+    <span id="sMutlu"></span>
+    <hr />
+    <input type="radio" id="rAnkara" name="rblSehirler" value="6" /> Ankara
+    &nbsp;
+    <input type="radio" id="rIstanbul" name="rblSehirler" value="34" /> İstanbul
+    &nbsp;
+    <input type="radio" id="rIzmir" name="rblSehirler" value="35" /> İzmir
+    <br />
+    <label id="lRblSehirler"></label>
+    <hr />
+    <select class="lbSehirler" multiple>
+        <option value="6">Ankara</option>
+        <option value="34">İstanbul</option>
+        <option value="35">İzmir</option>
+    </select>
+    <br />
+    <input type="button" id="bSeciliSehirleriGetir" value="Seçili Şehirleri Getir" />
+    <br />
+    <input type="button" id="bSeciliSehirleriTemizle" value="Seçili Şehirleri Temizle" />
+    <br />
+    <span id="sLbSeciliSehirler"></span>
+    <hr />
+    <input type="text" id="tbInput1" placeholder="Enter a text to set below..." />
+    <br />
+    <input type="button" id="bSetText" value="Set Text" />&nbsp;
+    <input type="button" id="bSetHTML" value="Set HTML" />&nbsp;
+    <input type="button" id="bSetValue" value="Set Value" />
+    <br />
+    <span id="sOutput1"></span>
+    <br />
+    <span id="sOutput2"></span>
+    <br />
+    <input type="text" id="tbOutput1" />
+</body>
+
+</html>
