@@ -18,6 +18,16 @@ namespace MoviesMvc.Models
 
         public string Surname { get; set; }
 
+        private string _fullName;
+        public string FullName
+        {
+            get
+            {
+                _fullName = Name + "" + Surname;
+                return _fullName;
+            }
+        }
+
         public bool Retired { get; set; }
         [DisplayName ("Retired")]
         public string RetiredText => Retired ? "Yes" : "No";
@@ -29,6 +39,6 @@ namespace MoviesMvc.Models
         public List<int> MovieIds { get; set; }
 
         [DisplayName("Movies")]
-        public string MoviesText => MoviesText == null || Movies.Count == 0 ? "" : string.Join("<br />", Movies.Select(m => m.Name));
+        public string MoviesText => Movies == null || Movies.Count == 0 ? "" : string.Join("<br />", Movies.Select(m => m.Name));
     }
 }

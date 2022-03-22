@@ -41,10 +41,10 @@
         <label for="lbDirectors" class="col-2 col-form-label">Directors</label>
         <div class="col-10">
             <select multiple class="form-control" name="DirectorIds">
-               @foreach(DirectorModel director in directors)
+               @foreach(DirectorModel d in directors)
             {
-                <option value="@director.Id">
-                  @(director.Name + " " + director.Surname)
+                <option value="@d.Id">
+                  @(d.Name + " " + d.Surname)
                 </option>
             }
             </select>
