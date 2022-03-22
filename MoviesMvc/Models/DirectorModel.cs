@@ -21,9 +21,14 @@ namespace MoviesMvc.Models
         public bool Retired { get; set; }
         [DisplayName ("Retired")]
         public string RetiredText => Retired ? "Yes" : "No";
-        public List<int> MovieIds { get; set; } 
+
+        public List<MovieModel> Movies { get; set; } 
         [Required(ErrorMessage ="At  least one movie must be selected!")]
 
         [DisplayName("Movies")]
+        public List<int> MovieIds { get; set; }
+
+        [DisplayName("Movies")]
+        public string MoviesText => MoviesText == null || Movies.Count == 0 ? "" : string.Join("<br />", Movies.Select(m => m.Name));
     }
 }

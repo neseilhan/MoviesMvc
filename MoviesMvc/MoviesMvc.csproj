@@ -404,7 +404,7 @@
     <Content Include="Views\Directors\Create.cshtml" />
     <Content Include="Views\Directors\Edit.cshtml" />
     <Content Include="Views\Directors\Delete.cshtml" />
-    <Content Include="Views\Directors\İndex.cshtml" />
+    <Content Include="Views\Directors\Index.cshtml" />
     <Content Include="Views\Directors\Details.cshtml" />
     <Content Include="Views\Directors\_CreateEdit.cshtml" />
     <Content Include="Views\Directors\_Details.cshtml" />
