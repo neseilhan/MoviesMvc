@@ -48,15 +48,8 @@ namespace MoviesMvc.Services
                     Name = model.Name.Trim(),
                     BoxOfficeReturn = model.BoxOfficeReturn,
                     ProductionYear = model.ProductionYear,
-                    //2. yol
-                    //MovieDirectors = model.DirectorIds == null ? new List<MovieDirector>() : model.DirectorIds.Select
-                    //  (directorId => new MovieDirector()
-                    //  {
-                    //      DirectorId = directorId
-                    //  }
-                    //  ).ToList()
 
-                    MovieDirectors = (model.DirectorId ?? new List<int>()).Select(directorId => new MovieDirector() //directorID nullsa bana boş 
+                    MovieDirectors = (model.DirectorIds ?? new List<int>()).Select(directorId => new MovieDirector() //directorID nullsa bana boş 
                     //bir int liste oluştur
                     {
                         DirectorId = directorId
@@ -67,16 +60,6 @@ namespace MoviesMvc.Services
 
               
 
-
-                //1.  yol
-                //entity.MovieDirectors = new List<MovieDirector>();
-                //if (model.DirectorIds != null && model.DirectorIds.Count > 0)
-                //{
-                //    foreach(int directorId in model.DirectorIds)
-                //    {
-                //        entity.MovieDirectors.Add(new MovieDirector() { DirectorId = directorId });
-                //    }
-                //}
 
                 _db.Movies.Add(entity);
                 _db.SaveChanges();

@@ -13,7 +13,6 @@ namespace MoviesMvc.Controllers
 {
     public class MoviesController : Controller
     {
-        // GET: Movies
         private  MoviesContext _db;
         private readonly MovieService _movieService;
         private readonly DirectorService _directorService; 
@@ -50,7 +49,7 @@ namespace MoviesMvc.Controllers
             //return new ContentResult();
             return Content("<b><i>Content result.</i><b>", "text/plain");
         }
-        public ActionResult GetMoviesXmlContent() // XML döndürme işlemleri genelde bu şekilde yapılmaz, web servisler üzerinden döndürülür!
+        public ActionResult GetMoviesXmlContent() // XML döndürme işlemleri genelde bu şekilde yapılmaz, web servisler üzerinden döndürülür
         {
             List<MovieModel> movies = _movieService.GetQuery().ToList();
             string xml = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>";
@@ -106,7 +105,7 @@ namespace MoviesMvc.Controllers
                 Name = Name,
                 BoxOfficeReturn = BoxOfficeReturn,
                 ProductionYear = ProductionYear,
-                DirectorId = DirectorIds
+                DirectorIds = DirectorIds
             };
             _movieService.Add(model); //servisi modele gönderdik modeli entitye dönüştürüp veritabanına ekleyecek. 
             return RedirectToAction("List");

@@ -19,6 +19,8 @@
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")*@
 
+
+
 </head>
 <body>
 
@@ -30,7 +32,7 @@
 
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
             <!-- Brand/logo -->
-            <a class="navbar-brand" href="~/"><i class="fa-thin fa-popcorn"></i>Movies MVC</a>
+            <a class="navbar-brand" href="~/"><i class="fa fa-lg fa-home"></i>Movies MVC</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -50,7 +52,7 @@
                         <a class="nav-link" href="@Url.Action("Index", "Directors")"><i class="fa fa-users"></i> Director List</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Index","Reviews")"><i class="fa fa-users"></i> Review List</a>
+                        <a class="nav-link" href="@Url.Action("Index","Reviews")"><i class="fa fa-lightbulb"></i> Review List</a>
                     </li>
 
                     @*@if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
@@ -62,6 +64,7 @@
             }*@
 
                 </ul>
+
            @Html.Partial("_LoginPartial")
            </div>
         </nav>

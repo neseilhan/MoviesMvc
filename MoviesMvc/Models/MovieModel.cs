@@ -9,16 +9,19 @@ namespace MoviesMvc.Models
 {
     public class MovieModel
     {
-        //[Key]
+        
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(300)]
+        [Required(ErrorMessage = "{0} must not be empty!")]
+        [StringLength(250, ErrorMessage = "{0} must have maximum {1} characters!")]
+        [DisplayName("Movie Name")]
         public string Name { get; set; }
 
-        [StringLength(4)]
+        [Required(ErrorMessage = "{0} must not be empty!")]
+        [DisplayName("Production Year")]
         public string ProductionYear { get; set; }
 
+        [DisplayName("Box Office Return")]
         public double? BoxOfficeReturn { get; set; }
 
         public List<DirectorModel> Directors { get; set; }
@@ -41,7 +44,9 @@ namespace MoviesMvc.Models
                 return _directorNamesHtml;
             }
         }
+        [DisplayName("Directors")]
+        public List<int> DirectorIds { get; set; }
         public List<ReviewModel> Reviews { get; set; }
-        public List<int> DirectorId { get; set; }
+       
     }
 }

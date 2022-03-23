@@ -1,17 +1,21 @@
-﻿@{
-    Layout = null;
-}
+﻿@model DirectorModel
 
-<!DOCTYPE html>
+@using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-    
+    <h4>Director</h4>
+    <hr />
+
+    @Html.ValidationSummary(false, "" ,new { @class = "text-danger"})
+    @Html.HiddenFor(model => model.Id)
+    <div class="form-group row">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new{@class= "col-form-label col-md-2" })
+
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class="form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger" })
+        </div>
+
     </div>
-</body>
-</html>
+            }
