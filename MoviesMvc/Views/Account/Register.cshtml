@@ -2,13 +2,31 @@
 @{
     ViewBag.Title = "Register";
 }
+<style>
+    .block {
+        display: block;
+        width: 15%;
+        border: none;
+        background-color: #4169E1;
+        color: white;
+        padding: 3px 5px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+        .block:hover {
+            background-color: #ddd;
+            color: black;
+        }
+</style>
 
 <h2>@ViewBag.Title.</h2>
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
+    <h4 > Create a new account.</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
@@ -31,7 +49,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
+            <input type="submit" class="block" value="Register" />
         </div>
     </div>
 }

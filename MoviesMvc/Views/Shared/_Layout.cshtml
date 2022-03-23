@@ -5,42 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title | Movies MVC</title>
 
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <link href="~/Content/bootstrap-grid.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     @*<link href="~/Content/bootstrap-grid.min.css" rel="stylesheet" />
-        <link href="~/Content/Site.css" rel="stylesheet" />*@
-
-    @Styles.Render("~/Content/fontawesome")
-
-    @Styles.Render("~/Content/css")
-    @*<script src="~/Scripts/modernizr-2.8.3.js"></script>*@
-    @Scripts.Render("~/bundles/modernizr")
+            <link href="~/Content/Site.css" rel="stylesheet" />
+        @Styles.Render("~/Content/font-awesome")
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
 
 </head>
 <body>
-    @*<div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    </ul>
-                    @Html.Partial("_LoginPartial")
-                </div>
-            </div>
-        </div>*@
+
+
+
+
+
     <div class="container">
 
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
             <!-- Brand/logo -->
-            <a class="navbar-brand" href="~/"><i class="fa fa-lg fa-home"></i>Movies MVC</a>
+            <a class="navbar-brand" href="~/"><i class="fa-thin fa-popcorn"></i>Movies MVC</a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -61,23 +51,22 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Index","Reviews")"><i class="fa fa-users"></i> Review List</a>
-
                     </li>
 
                     @*@if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
             {
-                <li class="nav-item" >
-                    <a class="nav-link" href="@Url.Action("Index", "MoviesReport")><i class="fa fa-users"></i </a>
+               <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Index", "MoviesReport")><i class="fa fa-users"></i></a>
 
                 </li>
             }*@
 
                 </ul>
-                @Html.Partial("_LoginPartial")
+           @Html.Partial("_LoginPartial")
            </div>
         </nav>
 
-        @*<br />*@ <!--site.css içinde degisiklik yaptık.-->
+        @*<br />*@ <!--site.css içinde degisiklik yaptım.-->
         <div class="container body-content paddingtop">
             @RenderBody()
             <hr />
