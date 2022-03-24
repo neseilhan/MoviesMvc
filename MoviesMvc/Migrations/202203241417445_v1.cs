@@ -1,4 +1,4 @@
-﻿namespace MoviesMvc.Migrations
+namespace MoviesMvc.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
@@ -13,7 +13,7 @@
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false, maxLength: 100),
-                        Surname = c.String(),
+                        Surname = c.String(nullable: false, maxLength: 100),
                         Retired = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
@@ -24,20 +24,20 @@
                     {
                         Id = c.Int(nullable: false, identity: true),
                         MovieId = c.Int(nullable: false),
-                        Director_Id = c.Int(),
+                        DirectorId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Directors", t => t.Director_Id)
+                .ForeignKey("dbo.Directors", t => t.DirectorId, cascadeDelete: true)
                 .ForeignKey("dbo.Movies", t => t.MovieId, cascadeDelete: true)
                 .Index(t => t.MovieId)
-                .Index(t => t.Director_Id);
+                .Index(t => t.DirectorId);
             
             CreateTable(
                 "dbo.Movies",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false, maxLength: 4),
+                        Name = c.String(nullable: false, maxLength: 300),
                         ProductionYear = c.String(maxLength: 4),
                         BoxOfficeReturn = c.Double(),
                     })
@@ -64,9 +64,9 @@
         {
             DropForeignKey("dbo.Reviews", "MovieId", "dbo.Movies");
             DropForeignKey("dbo.MovieDirectors", "MovieId", "dbo.Movies");
-            DropForeignKey("dbo.MovieDirectors", "Director_Id", "dbo.Directors");
+            DropForeignKey("dbo.MovieDirectors", "DirectorId", "dbo.Directors");
             DropIndex("dbo.Reviews", new[] { "MovieId" });
-            DropIndex("dbo.MovieDirectors", new[] { "Director_Id" });
+            DropIndex("dbo.MovieDirectors", new[] { "DirectorId" });
             DropIndex("dbo.MovieDirectors", new[] { "MovieId" });
             DropTable("dbo.Reviews");
             DropTable("dbo.Movies");

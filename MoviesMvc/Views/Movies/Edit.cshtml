@@ -1,17 +1,18 @@
-﻿@{
-    Layout = null;
+﻿@model DirectorModel
+
+@{ ViewBag.Title = "Edit Director"; }
+
+<h2>Edit Director</h2>
+
+@Html.Partial("_CreateEdit", Model)
+<div>
+    @Html.ActionLink("Back to Director List", "Index")
+</div>
+
+@section scripts
+{
+    @*<script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
+
+    @Scripts.Render("~/bundles/jqueryval")
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-    
-    </div>
-</body>
-</html>

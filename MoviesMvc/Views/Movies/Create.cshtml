@@ -7,8 +7,9 @@
 }
 
 <form action="/Movies/Create" method="post">
-
     <div class="form-group row">
+
+
         <label for="tbName" class="col-2 col-form-label">Name</label>
         <div class="col-10">
             <input type="text" class="form-control" id="rbName" placeholder="Enter movie name." name="Name" />
@@ -38,12 +39,12 @@
         <label for="lbDirectors" class="col-2 col-form-label">Directors</label>
         <div class="col-10">
             <select multiple class="form-control" name="DirectorIds">
-               @foreach(DirectorModel d in directors)
-            {
-                <option value="@d.Id">
-                  @(d.Name + " " + d.Surname)
-                </option>
-            }
+                @foreach (DirectorModel d in directors)
+                {
+                    <option value="@d.Id">
+                        @(d.Name + " " + d.Surname)
+                    </option>
+                }
             </select>
         </div>
     </div>

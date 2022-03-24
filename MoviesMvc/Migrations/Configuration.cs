@@ -59,6 +59,20 @@
                 new MovieDirector() {Id = 3, MovieId = 3, DirectorId = 3, Movie = movieList[2], Director = directorList[2]},
                 new MovieDirector() {Id = 4, MovieId = 4, DirectorId = 1, Movie = movieList[3], Director = directorList[0]}
             };
+            //veritabanındaki verileri silme
+            var movieDirectors = context.MovieDirectors.ToList();
+            context.MovieDirectors.RemoveRange(movieDirectors);
+            var reviews = context.Reviews.ToList();
+            context.Reviews.RemoveRange(reviews);
+            var movies = context.Movies.ToList();
+            context.Movies.RemoveRange(movies);
+            var directors = context.Directors.ToList();
+            context.Directors.RemoveRange(directors);
+            context.SaveChanges();
+
+            // veritabanına yukarıda liste olarak oluşturulan verileri ekleme:
+            context.MovieDirectors.AddRange(movieDirectorList);
+            context.Reviews.AddRange(reviewList);
 
         }
     }

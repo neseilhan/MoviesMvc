@@ -1,17 +1,23 @@
-﻿@{
-    Layout = null;
-}
+﻿@model DirectorModel
 
-<!DOCTYPE html>
+@{ ViewBag.Title = "Delete Director"; }
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-    
-    </div>
-</body>
-</html>
+<h2>@ViewData["Title"]</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+
+    @Html.Partial("_Details", Model)
+
+    @using (Html.BeginForm())
+    {
+@Html.AntiForgeryToken()
+
+                @Html.HiddenFor(model => model.Id)
+
+                                <div>
+                                    <input type="submit" value="Yes" class="btn btn-outline-danger" />
+                                    &nbsp;&nbsp;&nbsp;
+                                    @Html.ActionLink("No", "Index", null, new { @class = "btn btn-outline-warning" })
+                                </div>}
+</div>

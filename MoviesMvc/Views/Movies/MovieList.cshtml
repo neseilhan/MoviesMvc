@@ -2,7 +2,6 @@
 
 @{ ViewBag.Title = "Movie List"; }
 
-@*<div class="paddingtop">*@ @* Layout view'ında RenderBody() üzerinde yazıldı *@
 <h2>@ViewBag.Title</h2>
 
 @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
@@ -13,9 +12,15 @@
 {
 <p class="text-secondary">
     @TempData["Message"]
-</p>}
 
+
+    
+</p>
+}
+<a href="/Movies/Create"> <i class="fa fa-plus"></i> New Movie</a>
 <table class="table">
+
+    
     <tr>
         <th>
             Name
@@ -29,9 +34,7 @@
         <th>
             Directors
         </th>
-        <th>
-
-        </th>
+     
     </tr>
     @foreach (MovieModel movie in Model)
     {
@@ -44,25 +47,25 @@
     </td>
     <td>
         @movie.BoxOfficeReturn
-    </td>
+    </td>  
     <td>
 
         @{ string directors = "";
             foreach (DirectorModel director in movie.Directors)
             {
                 directors += "<i>" + director.Name + " " + director.Surname + "</i><br />";
-            }                
-            
-            }
-        @Html.Raw(directors) 
-
+            } }
+        @Html.Raw(directors)
     </td>
+
+
     <td>
         @Html.ActionLink("Details", "Details", new { id = movie.Id }) |
         @Html.ActionLink("Edit", "Edit", new { id = movie.Id }) |
-
 
         @Html.ActionLink("Delete", "Delete", new { id = movie.Id })
     </td>
 </tr>}
 </table>
+@*</div>*@
+

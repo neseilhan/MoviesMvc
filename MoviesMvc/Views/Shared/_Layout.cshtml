@@ -25,9 +25,6 @@
 <body>
 
 
-
-
-
     <div class="container">
 
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -39,7 +36,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav" mr-auto" >
+                <ul class="navbar-nav" mr-auto">
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item active">
@@ -56,22 +53,27 @@
                     </li>
 
                     @*@if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-            {
-               <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index", "MoviesReport")><i class="fa fa-users"></i></a>
+                    {
+                       <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "MoviesReport")><i class="fa fa-users"></i></a>
 
-                </li>
-            }*@
+                        </li>
+                    }*@
 
                 </ul>
 
-           @Html.Partial("_LoginPartial")
-           </div>
+                @Html.Partial("_LoginPartial")
+            </div>
         </nav>
 
-        @*<br />*@ <!--site.css içinde degisiklik yaptım.-->
-        <div class="container body-content paddingtop">
-            @RenderBody()
+        <div class="container body-content">
+
+            <div class="paddingtop">
+
+                @RenderBody()
+
+            </div>
+
             <hr />
             <footer>
                 <p>&copy; @DateTime.Now.Year - Nese İlhan</p>

@@ -1,4 +1,5 @@
-﻿using MoviesMvc.Contexts;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using MoviesMvc.Contexts;
 using MoviesMvc.Models;
 using MoviesMvc.Services;
 using System;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 
 namespace MoviesMvc.Controllers
 {
+    [HandleError]
     [Authorize]
     public class DirectorsController : Controller
     {
@@ -45,7 +47,7 @@ namespace MoviesMvc.Controllers
             return View(director);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Users = "nese@nese.com")] //Erişim İzni
         public ActionResult Create()
         {
             ViewBag.Movies = new MultiSelectList(movieService.GetQuery().ToList(), "Id", "Name");
@@ -82,6 +84,51 @@ namespace MoviesMvc.Controllers
 
             ViewBag.Movies = new MultiSelectList(movieService.GetQuery().ToList(), "Id", "Name", director.MovieIds);
             return View(director);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles ="Admin")]
+        public ActionResult Edit(DirectorModel director)
+        {
+            if(ModelState.IsValid)
+            {
+                directorService.Update(director);
+                return RedirectToAction("Index");
+            }
+            ViewData["Movies"] = new MultiSelectList(movieService.GetQuery().ToList(), "Id", "Name", director.MovieIds);
+            return View(director);
+        }
+        public ActionResult Delete(int ? id)
+        {
+            if(id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            }
+            DirectorModel director = directorService.GetQuery().SingleOrDefault(d => d.Id == id);
+
+            if(director == null)
+            {
+                return HttpNotFound();
+            }
+            return View(director);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            directorService.Delete(id);
+            return RedirectToAction("Index");
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

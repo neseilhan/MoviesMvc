@@ -27,6 +27,7 @@ namespace MoviesMvc.Models
         public List<DirectorModel> Directors { get; set; }
 
         private string _directorNamesHtml;
+
         [DisplayName("Directors")]
         public string DirectorNamesHtml
         {
@@ -35,9 +36,9 @@ namespace MoviesMvc.Models
                 _directorNamesHtml = "";
                 if (Directors != null && Directors.Count > 0)
                 {
-                    foreach (DirectorModel directormodel in Directors)
+                    foreach (DirectorModel directorModel in Directors)
                     {
-                        _directorNamesHtml += directormodel.Name + "" + directormodel.Surname + "<br />";
+                        _directorNamesHtml += directorModel.Name + "" + directorModel.Surname + "<br />";
                     }
 
                 }
