@@ -22,6 +22,8 @@ namespace MoviesMvc.Entities
 
         public virtual List<Review> Reviews { get; set; }
         public virtual List<MovieDirector> MovieDirectors { get; set; }
+
+   
     }
 
 }

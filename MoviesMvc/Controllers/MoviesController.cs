@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -26,8 +27,12 @@ namespace MoviesMvc.Controllers
 
         public ActionResult Index()
         {
-            List<Movie> movies = _db.Movies.ToList(); //filmleri veritabanından çek
-            return View(movies); // view a gönder.
+            //    List<Movie> movies = _db.Movies.ToList(); //filmleri veritabanından çek
+            //    return View(movies); // view a gönder.
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Action");
+            List<Movie> movies = _db.Movies.ToList();
+            return View(movies);
 
            
         }
@@ -35,10 +40,41 @@ namespace MoviesMvc.Controllers
         {
             try
             {
-                List<MovieModel> movies = _movieService.GetQuery().ToList();
-                return View("MovieList", movies); // view adını belirtebilirsin
+                //List<MovieModel> movies = _movieService.GetQuery().ToList();
+                //return View("MovieList", movies); // view adını belirtebilirsin
+
+                if (!User.Identity.IsAuthenticated)
+                    return RedirectToAction("Login", "Account");
+                List<MovieModel> model = _movieService.GetQuery().ToList();
+                return View("MovieList", model);
             }
-            catch (Exception )
+            catch (Exception exc )
+            {
+
+                return View("Exception");
+            }
+        }
+
+        public ActionResult ListAfterDelete(int? result == null)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+            try
+            {
+                if(result.HasValue)
+                {
+                    if (result.Value)
+                        TempData["Message"] = "Moviedeleted successfully.";
+                    else if (result.Value == 0)
+                        TempData["Message"] = "Movie could not be deleted because they are relational reviews.";
+                    else
+                        TempData["Message"] = "An error occured while deleting the movie ";
+                    
+                }
+                List<MovieModel> model = _movieService.GetQuery().ToList();
+                return View("MovieList", model);
+            }
+            catch (Exception exc )
             {
 
                 return View("Exception");
@@ -60,7 +96,7 @@ namespace MoviesMvc.Controllers
                 xml += "<Id>" + movie.Id + "</Id>";
                 xml += "<Name>" + movie.Name + "</Name>";
                 xml += "<ProductionYear>" + movie.ProductionYear + "</ProductionYear>";
-                xml += "<BoxOfficeReturn>" + movie.BoxOfficeReturn + "</BoxOfficeReturn>";
+                xml += "<BoxOfficeReturn>" + movie.BoxOfficeReturn + "</BoxOfficeReturn>"; 
                 xml += "</MovieModel>";
             }
             xml += "</MovieModels>";
@@ -75,48 +111,122 @@ namespace MoviesMvc.Controllers
         {
             return new EmptyResult();
         }
-        public ViewResult Create()
+
+        [HttpGet]
+        public ActionResult Create()
         {
-            List<int> years = new List<int>();
-            for(int year = DateTime.Now.Year +1; year >=1950; year--)
+            try
             {
-                years.Add(year);
+                List<int> years = new List<int>();
+                for (int year = DateTime.Now.Year + 1; year >= 1950; year--)
+                {
+                    years.Add(year);
+                }
+                ViewBag.Years = years;
+
+                List<DirectorModel> directors = _directorService.GetQuery().ToList();
+                ViewBag.Directors = directors;
+
+
+                return View();
             }
-            ViewBag.Years = years;
+            catch (Exception exc)
+            {
 
-            ViewBag.Directors = _directorService.GetQuery().ToList();
-
-            return View(); 
+                return View("Exception");
+            }
         }
         [HttpPost]
-        public ActionResult Create(string Name, double? BoxOfficeReturn, string ProductionYear, List<int> DirectorIds)
+        public ActionResult Create(string Name, double? BoxOfficeReturn, string ProductionYear, List<int> DirectorIds, HttpPostedFileBase postedFile)
         {
-            if (string.IsNullOrWhiteSpace(Name))
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+            if (!User.IsInRole("Admin"))
+                return RedirectToAction("Login", "Account");
 
-                return Content("Name must not be Empty"); //validasyon işlemleri
-
-            if (Name.Length > 300)
-                return Content("Name must have maximum 300 characters");
-            if (ProductionYear == "")
-                return Content("Production Year must be selected");
-
-            MovieModel model = new MovieModel() //Gönderilen veriler üzerinden model olusturulur.
+            try
             {
-                Name = Name,
-                BoxOfficeReturn = BoxOfficeReturn,
-                ProductionYear = ProductionYear,
-                DirectorIds = DirectorIds
-            };
-            _movieService.Add(model); //servisi modele gönderdik modeli entitye dönüştürüp veritabanına ekleyecek. 
-            return RedirectToAction("List");
+                if (string.IsNullOrWhiteSpace(Name))
+
+                    return Content("Name must not be Empty"); //validasyon işlemleri
+
+                if (Name.Length > 300)
+                    return Content("Name must have maximum 300 characters");
+                if (ProductionYear == "")
+                    return Content("Production Year must be selected");
+
+
+                MovieModel model = new MovieModel() //Gönderilen veriler üzerinden model olusturulur.
+                {
+                    Name = Name,
+                    BoxOfficeReturn = BoxOfficeReturn,
+                    ProductionYear = ProductionYear,
+                    DirectorIds = DirectorIds
+                };
+                _movieService.Add(model); //servisi modele gönderdik modeli entitye dönüştürüp veritabanına ekleyecek. 
+                return RedirectToAction("List");
+            }
+            catch (Exception exc)
+            {
+
+                return View("Exception");
+            }
 
         }
         public ActionResult Details(int? id)
         {
-            if (!id.HasValue)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "İd is required!");
-          MovieModel model =  _movieService.GetQuery().SingleOrDefault(movie => movie.Id == id.Value); //sorgu üzerinden tek bir kayda ulaş
-            return View(model);
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            try
+            {
+                if (!id.HasValue)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "İd is required!");
+                }
+                MovieModel model = _movieService.GetQuery().SingleOrDefault(movie => movie.Id == id.Value); //sorgu üzerinden tek bir kayda ulaş
+                if(model == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(model);
+            }
+            catch (Exception exc)
+            {
+
+                return  View("Exception");
+            }
+        }
+
+        public ActionResult Edit(int? id)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+            try
+            {
+                if (id == null)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                MovieModel model = _movieService.GetQuery().SingleOrDefault(m => m.Id == id);
+                if (model == null)
+                    return HttpNotFound();
+
+                List<int> years = new List<int>();
+                for(int year = DateTime.Today.Year +1; year >= 1930; year--)
+                {
+                    years.Add(year);
+                }
+                List<SelectListItem> yearSelectListItems = years.Select(y => new SelectListItem()
+                {
+                    Value = y.ToString(),
+                    Text = y.ToString()
+                }).ToList();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
       

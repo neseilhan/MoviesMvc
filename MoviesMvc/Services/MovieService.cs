@@ -31,7 +31,7 @@ namespace MoviesMvc.Services
                 Name = m.Name,
                 BoxOfficeReturn = m.BoxOfficeReturn,
                 ProductionYear = m.ProductionYear,
-                Directors = m.MovieDirectors.Select(md => new DirectorModel()
+               Directors = m.MovieDirectors.Select(md => new DirectorModel()
                 {
                     Id = md.Director.Id,
                     Name = md.Director.Name,

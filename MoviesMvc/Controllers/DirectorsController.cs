@@ -47,7 +47,7 @@ namespace MoviesMvc.Controllers
             return View(director);
         }
 
-        [Authorize(Users = "nese@nese.com")] //Erişim İzni
+        [Authorize(Users = "nese@nese.com")] //Erişim İzni artırılabilir.
         public ActionResult Create()
         {
             ViewBag.Movies = new MultiSelectList(movieService.GetQuery().ToList(), "Id", "Name");
