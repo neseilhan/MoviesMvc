@@ -15,7 +15,7 @@
 
     <div class="form-group row">
         @Html.LabelFor(m => m.Name, new { @class = "form-label" })
-        <div class="form-group row">
+        <div class="form-group">
             @Html.TextBoxFor(m => m.Name, new { @class = " form-control", placeholder = "Enter movie name" })
 
             @Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger"})

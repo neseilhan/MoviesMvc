@@ -68,7 +68,7 @@ namespace MoviesMvc.Controllers
         }
 
 
-        [Authorize(Roles ="Admin")]
+        [Authorize(Users = "nese@nese.com")]
         public ActionResult Edit (int? id)
         {
             if(id == null)
@@ -88,7 +88,7 @@ namespace MoviesMvc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(DirectorModel director)
         {
             if(ModelState.IsValid)

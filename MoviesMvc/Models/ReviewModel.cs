@@ -14,6 +14,7 @@ namespace MoviesMvc.Models
         [StringLength(1000, ErrorMessage = "{0} must have maximum {1} characters!")]
 
         public string Content { get; set; }
+
         public int Rating { get; set; }
 
         [StringLength(200, ErrorMessage = "{0} must have maximum {1} characters!")]

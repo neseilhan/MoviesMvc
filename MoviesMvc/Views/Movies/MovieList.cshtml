@@ -16,12 +16,13 @@
     @TempData["Message"]
 
 
-
-</p>}
+    
+</p>
+}
 <a href="/Movies/Create"> <i class="fa fa-plus"></i> New Movie</a>
 <table class="table">
 
-
+    
     <tr>
         <th>
             Name
@@ -63,13 +64,13 @@
 
     <td>
 
-        @Html.ActionLink(" Edit", " Edit", null, new { id = movie.Id, @class = " fa fa-pencil-square-o" })   |
+  
+        <i class="fa fa-pencil-square-o"></i> @Html.ActionLink("Edit", "Edit", new { id = movie.Id, @class = "fa fa-pencil-square-o" })   |
         <i class="fa fa-info-circle"></i>  @Html.ActionLink("Details", "Details", new { id = movie.Id }) |
         <i class="fa fa-trash"></i>  @Html.ActionLink("Delete", "Delete", new { id = movie.Id })
     </td>
 
-</tr>
-}
+</tr>}
 </table>
 @*</div>*@
 

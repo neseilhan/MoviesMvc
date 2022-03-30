@@ -13,56 +13,39 @@ namespace MoviesMvc.Services
     public class ReviewService
     {
         private readonly MoviesContext _db;
-         public ReviewService (MoviesContext db)
+         
+        public ReviewService(MoviesContext db)
         {
             _db = db;
         }
+
         public IQueryable<ReviewModel> GetQuery()
         {
-            try
+            return _db.Reviews.OrderBy(r => r.Movie.Name).Select(r => new ReviewModel()
             {
-                return _db.Reviews.OrderBy(r => r.Movie.Name).Select(r => new ReviewModel()
+                Id = r.Id,
+                Content = r.Content,
+                Rating = r.Rating,
+                Reviewer = r.Reviewer,
+                Date = r.Date,
+                MovieId = r.MovieId,
+                Movie = new MovieModel()
                 {
-                    Id = r.Id,
-                    Content = r.Content,
-                    Date = r.Date,
-                    Reviewer = r.Reviewer,
-                    Rating = r.Rating,
-                    MovieId = r.MovieId,
-
-                    Movie = new MovieModel()
+                    Id = r.Movie.Id,
+                    Name = r.Movie.Name,
+                    ProductionYear = r.Movie.ProductionYear,
+                    BoxOfficeReturn = r.Movie.BoxOfficeReturn,
+                    Directors = r.Movie.MovieDirectors.Select(md => new DirectorModel()
                     {
-                        Id = r.Movie.Id,
-                        Name = r.Movie.Name,
-                        ProductionYear = r.Movie.ProductionYear,
-                        BoxOfficeReturn = r.Movie.BoxOfficeReturn,
-                        Directors = r.Movie.MovieDirectors.Select(md => new DirectorModel()
-                        {
-                            Id = md.Director.Id,
-                            Name = md.Director.Name,
-                            Surname = md.Director.Surname,
-                            Retired = md.Director.Retired
+                        Id = md.Director.Id,
+                        Name = md.Director.Name,
+                        Surname = md.Director.Surname,
+                        Retired = md.Director.Retired,
+                    }).ToList()
 
-                        }).ToList()
-                    }
+                }
 
-                });
-
-            }
-            catch (Exception exc)
-            {
-
-                throw exc;
-            }
-        }
-
-        public void FillAllratings(ReviewModel review)
-        {
-            review.AllRatings = new List<int>();
-            for(int i= 1; i <= 10; i++)
-            {
-                review.AllRatings.Add(i);
-            }
+            });
         }
 
         public void Add(ReviewModel model)
@@ -71,13 +54,13 @@ namespace MoviesMvc.Services
             {
                 Review entity = new Review()
                 {
+                    Id = model.Id,
                     Content = model.Content,
-                    Date = model.Date.Value,
-                    MovieId = model.MovieId,
                     Rating = model.Rating,
-                    Reviewer = string.IsNullOrWhiteSpace(model.Reviewer) ? "Anonymous" : model.Reviewer
-
+                    MovieId = model.MovieId,
+                    Reviewer = string.IsNullOrWhiteSpace(model.Reviewer) ? "Anonymous" :  model.Reviewer
                 };
+
                 _db.Reviews.Add(entity);
                 _db.SaveChanges();
             }
@@ -88,18 +71,36 @@ namespace MoviesMvc.Services
             }
         }
 
+        public void FillAllRatings(ReviewModel review)
+
+        {
+            review.AllRatings = new List<int>();
+            for(int i=1;i<=10; i++)
+            {
+                review.AllRatings.Add(i);
+            }
+           
+
+        }
+
         public void Update(ReviewModel model)
         {
             try
             {
-                Review entity = _db.Reviews.Find(model.Id);
-                entity.Content = model.Content;
-                entity.Date = model.Date.Value;
-                entity.MovieId = model.MovieId;
-                entity.Rating = model.Rating;
-                entity.Reviewer = string.IsNullOrWhiteSpace(model.Reviewer) ? "Anonymous" : model.Reviewer;
-                _db.Entry(entity).State = EntityState.Modified;
-                _db.SaveChanges();
+                
+                {
+                    Review entity = _db.Reviews.Find(model.Id);
+                    entity.Content = model.Content;
+                    entity.Date = model.Date.Value;
+                    entity.MovieId = model.MovieId;
+                    entity.Rating = model.Rating;
+                    entity.Reviewer = string.IsNullOrWhiteSpace(model.Reviewer) ? "Anonymous" : model.Reviewer;
+
+                    _db.Entry(entity).State = EntityState.Modified;
+                    _db.SaveChanges();
+                };
+               
+
             }
             catch (Exception exc)
             {
@@ -108,7 +109,7 @@ namespace MoviesMvc.Services
             }
         }
 
-        public void Delete (int id)
+        public void Delete(int id)
         {
             try
             {
@@ -121,6 +122,8 @@ namespace MoviesMvc.Services
 
                 throw exc;
             }
+
         }
+
     }
 }
