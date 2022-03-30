@@ -1,11 +1,13 @@
-﻿
+﻿@model MovieModel
 @{
     ViewBag.Title = "Create New Movie";
     List<int> years = ViewBag.Years as List<int>;
     List<DirectorModel> directors = ViewBag.Directors as List<DirectorModel>;
     
 }
+<h2>Create New Movie</h2>
 
+<hr />
 <form action="/Movies/Create" method="post">
     <div class="form-group row">
 
@@ -37,7 +39,7 @@
     </div>
     <div class="form-group row">
         <label for="lbDirectors" class="col-2 col-form-label">Directors</label>
-        <div class="col-10">
+        <div class=" col-10">
             <select multiple class="form-control" name="DirectorIds">
                 @foreach (DirectorModel d in directors)
                 {
@@ -47,17 +49,21 @@
                 }
             </select>
         </div>
-    </div >
+        <div class="form-group row">
 
+            <div class="offset-md-2 col-md-10">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-warning">Reset</button>
+            </div>
 
-
-    <div class="form-group row">
-        <div class="">
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <button type="reset" class="btn btn-warning">Reset</button>
         </div>
-
     </div>
+
+
+    <div>
+        @Html.ActionLink("Back to movie List", "List")
+    </div>
+   
 
 
 

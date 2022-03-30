@@ -48,14 +48,14 @@ namespace MoviesMvc.Controllers
                 List<MovieModel> model = _movieService.GetQuery().ToList();
                 return View("MovieList", model);
             }
-            catch (Exception exc )
+            catch (Exception  )
             {
 
                 return View("Exception");
             }
         }
 
-        public ActionResult ListAfterDelete(int? result == null)
+        public ActionResult ListAfterDelete(int? result = null)
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
@@ -63,7 +63,7 @@ namespace MoviesMvc.Controllers
             {
                 if(result.HasValue)
                 {
-                    if (result.Value)
+                    if (result.Value  == 1)
                         TempData["Message"] = "Moviedeleted successfully.";
                     else if (result.Value == 0)
                         TempData["Message"] = "Movie could not be deleted because they are relational reviews.";
@@ -74,7 +74,7 @@ namespace MoviesMvc.Controllers
                 List<MovieModel> model = _movieService.GetQuery().ToList();
                 return View("MovieList", model);
             }
-            catch (Exception exc )
+            catch (Exception  )
             {
 
                 return View("Exception");
@@ -96,7 +96,7 @@ namespace MoviesMvc.Controllers
                 xml += "<Id>" + movie.Id + "</Id>";
                 xml += "<Name>" + movie.Name + "</Name>";
                 xml += "<ProductionYear>" + movie.ProductionYear + "</ProductionYear>";
-                xml += "<BoxOfficeReturn>" + movie.BoxOfficeReturn + "</BoxOfficeReturn>"; 
+                xml += "<BoxOfficeReturn>" + movie.BoxOfficeReturn + "</BoxOfficeReturn>";
                 xml += "</MovieModel>";
             }
             xml += "</MovieModels>";
@@ -130,7 +130,7 @@ namespace MoviesMvc.Controllers
 
                 return View();
             }
-            catch (Exception exc)
+            catch (Exception )
             {
 
                 return View("Exception");
@@ -166,7 +166,7 @@ namespace MoviesMvc.Controllers
                 _movieService.Add(model); //servisi modele gönderdik modeli entitye dönüştürüp veritabanına ekleyecek. 
                 return RedirectToAction("List");
             }
-            catch (Exception exc)
+            catch (Exception )
             {
 
                 return View("Exception");
@@ -191,7 +191,7 @@ namespace MoviesMvc.Controllers
                 }
                 return View(model);
             }
-            catch (Exception exc)
+            catch (Exception )
             {
 
                 return  View("Exception");
@@ -221,14 +221,127 @@ namespace MoviesMvc.Controllers
                     Value = y.ToString(),
                     Text = y.ToString()
                 }).ToList();
+
+                SelectList yearSelectList = new SelectList(yearSelectListItems, "Value", "Text", model.ProductionYear); //Drop Down List
+
+                ViewData["Years"] = yearSelectList;
+
+                List<DirectorModel> directors = _directorService.GetQuery().ToList();
+                MultiSelectList directorMultiSelectList = new MultiSelectList(directors, "Id", "FullName", model.DirectorIds); //ListBox
+
+                ViewData["Directors"] = directorMultiSelectList;
+
+                return View(model);
             }
-            catch (Exception)
+            catch (Exception )
             {
 
-                throw;
+                return View("Exception");
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(MovieModel model)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _movieService.Update(model);
+                    return RedirectToAction("List");
+                }
+                    List<int> years = new List<int>();
+
+                    for (int year = DateTime.Now.Date.Year + 1; year >= 1930; year--)
+                    {
+                        years.Add(year);
+                    }
+
+                    List<SelectListItem> yearSelectListItems = years.Select(y => new SelectListItem()
+                    {
+                        Value = y.ToString(),
+                        Text = y.ToString()
+                    }).ToList();
+
+                    SelectList yearSelectList = new SelectList(yearSelectListItems, "Value", "Text", model.ProductionYear);
+                    ViewBag.Years = yearSelectList;
+
+                    List<DirectorModel> directors = _directorService.GetQuery().ToList();
+                    MultiSelectList directorMultiSelectList = new MultiSelectList(directors, "Id", "FullName", model.DirectorIds); //ListBox
+
+                    ViewData["Directors"] = directorMultiSelectList;
+
+                    return View(model);
+
+                
+
+            }
+            catch (Exception )
+            {
+
+                return View("Exception");
+            }
+
+        }
+
+        public ActionResult Delete(int? id)
+        {
+            if(!User.Identity.IsAuthenticated)
+            
+                return RedirectToAction("Login", "Account");
+            try
+            {
+                if (id == null)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                MovieModel model = _movieService.GetQuery().SingleOrDefault(m => m.Id == id);
+                if (model == null)
+                    return HttpNotFound();
+
+                return View(model);
+
+            }
+            catch (Exception )
+            {
+
+                return View("Exception");
             }
         }
 
-      
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int? id)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+
+            try
+            {
+                if (id == null)
+
+                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    bool result = _movieService.Delete(id.Value);
+                
+                if (result)
+                    return RedirectToAction("ListAfterDelete", new { result = 1 }); 
+                    return RedirectToAction("ListAfterDelete", new { result = 0 });
+                
+            }
+            catch (Exception )
+            {
+                return RedirectToAction("ListAfterDelete", new { result = -1 });
+               
+            }
+
+
+
+        }
+
+
     }
 }

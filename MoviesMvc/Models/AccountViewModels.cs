@@ -44,6 +44,7 @@ namespace MoviesMvc.Models
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
     }
 
     public class LoginViewModel
@@ -52,6 +53,16 @@ namespace MoviesMvc.Models
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
+
+        private string name;
+        public string Name
+        {
+            get
+            {
+                name = Email.Split('@').ToString();
+                return name;
+            }
+        }
 
         [Required]
         [DataType(DataType.Password)]

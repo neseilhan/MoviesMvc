@@ -13,54 +13,49 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    @*<link href="~/Content/bootstrap-grid.min.css" rel="stylesheet" />
-            <link href="~/Content/Site.css" rel="stylesheet" />
-        @Styles.Render("~/Content/font-awesome")
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")*@
-
-
 
 </head>
 <body>
 
 
-    <div class="container">
+    <div>
 
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark  ">
             <!-- Brand/logo -->
-            <a class="navbar-brand" href="~/"><i class="fa fa-lg fa-home"></i>Movies MVC</a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <a class="navbar-brand" href="~/"><i class="active fa fa-lg fa-home"></i> Movies MVC</a>
+
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav" mr-auto">
+
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav" mr-auto>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item active">
-                            <a class="nav-link" href="~/Movies/List"><i class="fa fa-film"> </i>Movie List</a>
-
+                            <a class="nav-link" href="~/Movies/List"><i class="fa fa-film"> </i> Movie List</a>
                         </li>
+
                     }
 
-                    <li class="nav-item">
+                    <li>
                         <a class="nav-link" href="@Url.Action("Index", "Directors")"><i class="fa fa-users"></i> Director List</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Index","Reviews")"><i class="fa fa-lightbulb"></i> Review List</a>
                     </li>
 
-                    @*@if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                </ul>
+
+                @*@if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                     {
                        <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Index", "MoviesReport")><i class="fa fa-users"></i></a>
 
                         </li>
                     }*@
-
-                </ul>
 
                 @Html.Partial("_LoginPartial")
             </div>
@@ -85,10 +80,16 @@
 
 
     @*@Scripts.Render("~/bundles/jquery")*@
+    @*@Scripts.Render("~/bundles/bootstrap")*@
+
+
     <script src="~/Scripts/jquery-3.6.0.min.js"></script>
 
-    @*@Scripts.Render("~/bundles/bootstrap")*@
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
 
     @RenderSection("scripts", required: false)

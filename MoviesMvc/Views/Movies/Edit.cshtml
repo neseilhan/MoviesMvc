@@ -1,1 +1,59 @@
-﻿
+﻿@model  MovieModel
+    @{ 
+        ViewBag.Title = "Edit Movie";
+    }
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.Id)
+
+    @Html.ValidationSummary(false, null, new { @class = "text-warning"})
+
+    @Html.AntiForgeryToken()
+
+    <div class="form-group row">
+        @Html.LabelFor(m => m.Name, new { @class = "form-label" })
+        <div class="form-group row">
+            @Html.TextBoxFor(m => m.Name, new { @class = " form-control", placeholder = "Enter movie name" })
+
+            @Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger"})
+
+         
+        </div >
+    </div>
+    <div class="form-group row">
+
+        @Html.LabelFor(m => m.BoxOfficeReturn, new { @class = ""} )
+        <div>
+            @Html.TextBoxFor(m => m.BoxOfficeReturn, new { @class = "form-control", placeholder = "Enter box office return." })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        @Html.LabelFor(m=> m.ProductionYear, new {@class = "form-label" })
+        <div>
+            @Html.DropDownListFor(m=> m.ProductionYear, ViewData["Years"] as SelectList,"-- Select Year --", new { @class =" form-control"})
+            @Html.ValidationMessageFor(m=> m.ProductionYear, null, new {@class = "text-danger"})
+        </div>
+    </div >
+    <div class="form-group row">
+        @Html.LabelFor(m => m.DirectorIds, new { @class = "form-label"})
+        <div>
+            @Html.ListBoxFor(m => m.DirectorIds, ViewData["Directors"] as MultiSelectList, new {@class = "form-control" })
+       </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-10">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-danger">Reset</button>
+            &nbsp;&nbsp;&nbsp;
+            @Html.ActionLink("Back To Movies","List")
+
+        </div>
+
+    </div>
+}
+

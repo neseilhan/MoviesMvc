@@ -4,6 +4,8 @@
 
 <h2>@ViewBag.Title</h2>
 
+<h5 class="text-secondary">@Model.Count movies found.</h5>
+
 @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
 {
 @Html.ActionLink("New Movie", "Create")}
@@ -14,13 +16,12 @@
     @TempData["Message"]
 
 
-    
-</p>
-}
+
+</p>}
 <a href="/Movies/Create"> <i class="fa fa-plus"></i> New Movie</a>
 <table class="table">
 
-    
+
     <tr>
         <th>
             Name
@@ -61,13 +62,14 @@
 
 
     <td>
-        @Html.ActionLink("Details", "Details", new { id = movie.Id }) |
-        @Html.ActionLink("Edit", "Edit", new { id = movie.Id }) |
 
-        @Html.ActionLink("Delete", "Delete", new { id = movie.Id })
+        @Html.ActionLink(" Edit", " Edit", null, new { id = movie.Id, @class = " fa fa-pencil-square-o" })   |
+        <i class="fa fa-info-circle"></i>  @Html.ActionLink("Details", "Details", new { id = movie.Id }) |
+        <i class="fa fa-trash"></i>  @Html.ActionLink("Delete", "Delete", new { id = movie.Id })
     </td>
 
-</tr>}
+</tr>
+}
 </table>
 @*</div>*@
 
