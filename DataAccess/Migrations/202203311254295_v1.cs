@@ -27,8 +27,8 @@ namespace MoviesMvc.Migrations
                         DirectorId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Directors", t => t.DirectorId, cascadeDelete: true)
-                .ForeignKey("dbo.Movies", t => t.MovieId, cascadeDelete: true)
+                .ForeignKey("dbo.Directors", t => t.DirectorId)
+                .ForeignKey("dbo.Movies", t => t.MovieId)
                 .Index(t => t.MovieId)
                 .Index(t => t.DirectorId);
             
@@ -55,15 +55,15 @@ namespace MoviesMvc.Migrations
                         MovieId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Movies", t => t.MovieId, cascadeDelete: true)
+                .ForeignKey("dbo.Movies", t => t.MovieId)
                 .Index(t => t.MovieId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Reviews", "MovieId", "dbo.Movies");
             DropForeignKey("dbo.MovieDirectors", "MovieId", "dbo.Movies");
+            DropForeignKey("dbo.Reviews", "MovieId", "dbo.Movies");
             DropForeignKey("dbo.MovieDirectors", "DirectorId", "dbo.Directors");
             DropIndex("dbo.Reviews", new[] { "MovieId" });
             DropIndex("dbo.MovieDirectors", new[] { "DirectorId" });

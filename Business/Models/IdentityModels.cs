@@ -18,7 +18,7 @@ namespace MoviesMvc.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("MovieConnection", throwIfV1Schema: false)
+            : base("MoviesContext", throwIfV1Schema: false)
         {
         }
 

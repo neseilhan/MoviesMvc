@@ -113,8 +113,13 @@ namespace MoviesMvc.Controllers
         }
 
         [HttpGet]
+        //[Authorize(Users = "nese@nese.com")]
         public ActionResult Create()
         {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+            //if (!User.IsInRole("Admin"))
+            //    return RedirectToAction("Login", "Account");
             try
             {
                 List<int> years = new List<int>();
@@ -137,12 +142,13 @@ namespace MoviesMvc.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Create(string Name, double? BoxOfficeReturn, string ProductionYear, List<int> DirectorIds, HttpPostedFileBase postedFile)
+        [Authorize(Users = "nese@nese.com")]
+        public ActionResult Create(string Name, double? BoxOfficeReturn, string ProductionYear, List<int> DirectorIds)
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
-            if (!User.IsInRole("Admin"))
-                return RedirectToAction("Login", "Account");
+            //if (!User.IsInRole("Admin"))
+            //    return RedirectToAction("Login", "Account");
 
             try
             {

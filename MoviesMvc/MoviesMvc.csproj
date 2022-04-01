@@ -173,37 +173,16 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Configs\MoviesConfig.cs" />
-    <Compile Include="Contexts\MoviesContext.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DirectorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MoviesController.cs" />
     <Compile Include="Controllers\ReviewsController.cs" />
-    <Compile Include="Entities\Director.cs" />
-    <Compile Include="Entities\Movie.cs" />
-    <Compile Include="Entities\MovieDirector.cs" />
-    <Compile Include="Entities\Review.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202203241417445_v1.cs" />
-    <Compile Include="Migrations\202203241417445_v1.Designer.cs">
-      <DependentUpon>202203241417445_v1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\DirectorModel.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\MovieModel.cs" />
-    <Compile Include="Models\ReviewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\DirectorService.cs" />
-    <Compile Include="Services\MovieService.cs" />
-    <Compile Include="Services\ReportService.cs" />
-    <Compile Include="Services\ReviewService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -423,10 +402,6 @@
     <Content Include="Views\Reviews\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Plugins\" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -436,9 +411,22 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202203241417445_v1.resx">
-      <DependentUpon>202203241417445_v1.cs</DependentUpon>
-    </EmbeddedResource>
+    <ProjectReference Include="..\Base\Base.csproj">
+      <Project>{16e2d420-f8aa-47c4-bedc-731fa7bda820}</Project>
+      <Name>Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Business\Business.csproj">
+      <Project>{786af580-25ac-4e58-8176-462e6d0d532e}</Project>
+      <Name>Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj">
+      <Project>{3f45b69a-f66e-44ab-89b4-f68eda26464f}</Project>
+      <Name>DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Entities\Entities.csproj">
+      <Project>{3b80076c-35c3-4e17-99d3-db1c9478ae63}</Project>
+      <Name>Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

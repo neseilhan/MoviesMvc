@@ -4,9 +4,9 @@
 
 @if(User.Identity.IsAuthenticated)
             {
-                <div class="jumbotron"><h1>Welcome @User.Identity.Name to Movies!</h1></div>
+                <div class="jumbotron"><h4>Welcome @User.Identity.Name to Movies!</h4></div>
 }
 else
             {
-                <div class="jumbotron"><h1>Welcome to movies!</h1></div>
+                <div class="jumbotron"><h4>Welcome to movies!</h4></div>
             }

@@ -15,13 +15,14 @@ namespace MoviesMvc.Controllers
     [Authorize]
     public class DirectorsController : Controller
     {
-        private MoviesContext db = new MoviesContext();
+        private MoviesContext db;
 
         private DirectorService directorService;
         private MovieService movieService;
 
         public DirectorsController()
         {
+            db = new MoviesContext();
             directorService = new DirectorService(db);
             movieService = new MovieService(db);
         }
@@ -55,8 +56,8 @@ namespace MoviesMvc.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize (Roles = "Admin")]
 
+        [Authorize(Users = "nese@nese.com")]
         public ActionResult Create(DirectorModel director)
         {
             if(ModelState.IsValid)
