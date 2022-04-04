@@ -1,7 +1,123 @@
-﻿
+﻿@model List<ReviewModel>
 @{
     ViewBag.Title = "Review List";
 }
 
-<h2>Index</h2>
+<h2>Review List</h2>
 
+<p>
+    <a href="@Url.Action("Create") title="Create New Review"><i class="fa fa-plus"></i> New Review</a>
+    @*@Html.ActionLink("New Review", "Create")*@
+</p>
+
+@if (Model != null && Model.Count > 0)
+{
+
+    <h5 class="text-secondary">@Model.Count reviews found.</h5>
+
+    @Html.AntiForgeryToken()
+
+    using (@Html.BeginForm("Delete", "Reviews", FormMethod.Post, new { id = "fReviews" }))
+    {
+        @Html.Hidden("id", null, new { id = "hfReviewId" })
+
+        <table id="reviews" class="display" style="width: 100%;">
+
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Movie.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Reviewer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Rating)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().DateText)
+                </th>
+                <th></th>
+            </tr>
+
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Movie.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Reviewer)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Rating)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateText)
+                        </td>
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+    }
+}
+else
+{
+    <p class="text-secondary">No reviews found.</p>
+}
+@section scripts
+{
+    <link href="~/Plugins/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="~/Plugins/DataTables/js/jquery.dataTables.min.js"></script>
+
+    <link href="~/Plugins/AlertifyJS/css/alertify.min.css" rel="stylesheet" />
+    <link href="~/Plugins/AlertifyJS/css/themes/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Plugins/AlertifyJS/alertify.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#reviews").DataTable({
+                "language": {
+
+                }
+            });
+            $(".aDelete").click(function (event) {
+                event.preventDefault();
+
+                var clickedLink = $(this); //tıklanılan linki getirir
+                console.log(clickedLink);
+
+                var clickedLinkId = clickedLink.prop("id");
+                console.log(clickedLinkId);
+
+                var clikedLinkHref = clickedLink.prop("href");
+                console.log(clikedLinkHref);
+                clickedLinkHref = clickedLink.attr("href");
+                console.log(clickedLinkHref);
+
+
+                var clickedlinkhrefArray = clickedLinkHref.split('/');
+                clickedLinkHref = clickedlinkhrefArray[3];
+                console.log(clickedLinkId);
+
+                $('#hfReviewId').val(clickedLinkId);
+
+                alertify.confirm("Delete Review", "Are you sure you want to delete this review",
+                    function () { //OK fonksiyonu
+
+                        $('#fReviews').submit();
+                    },
+                    function () {
+
+
+                    }).set("labels", { ok: "Yes", cancel: "No" });
+
+
+            });
+        });
+    </script>
+
+}
