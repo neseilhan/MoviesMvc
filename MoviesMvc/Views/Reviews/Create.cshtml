@@ -7,29 +7,86 @@
 
 @using (Html.BeginForm("Create", "Reviews", FormMethod.Post, new { autocomplete = "off" }))
 {
-@Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
     <h4>Review</h4>
     <hr />
 
-    @Html.ValidationSummary(false, "", new { @class = "text-danger"})
-    <div class="form-group-row"
-         @Html.LabelFor(model => model.Rating, htmlAttributes: new { @class = "col-form-label col-md-2"})>
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    <div class="form-group row"
+         @Html.LabelFor(model => model.Rating, htmlAttributes: new { @class = "col-form-label col-md-2" })>
         <div class="col-md-10 divradiopaddingtop">
-            @foreach(int rating in Model.AllRatings)
-                {
-                    @Html.RadioButtonFor(model => model.Rating, rating new{ @class = "col-form-label col-md-2" })
-                }
+            @foreach (int rating in Model.AllRatings)
+            {
+                @Html.RadioButtonFor(model => model.Rating, rating, new { @checked = (rating == 10 ? "true" : "false") })@:&nbsp;@rating &nbsp;&nbsp;&nbsp;
+            }
 
         </div>
     </div>
 
-    <div class="form-group-row">
-        @Html.LabelFor(model => model.Date, htmlAttributes: new{@class = "col-form-label col-md-2" })
+    <div class="form-group row">
+        @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "col-form-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.Date, "yyyy/MM/dd", new {@class = "form-control", id="tbDate"})
-            @Html.ValidationMessageFor(model => model.Date, "", new {@class = "text-danger" }) 
+            @Html.TextBoxFor(model => model.Date, "yyyy/MM/dd", new { @class = "form-control", id = "tbDate" })
+            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row ">
+        @Html.LabelFor(model => model.MovieId, htmlAttributes: new { @class = "col-form-label col-md-2 " })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.MovieId, ViewBag.Movies as SelectList, "--Select Movie--", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.MovieId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group row ">
+
+        @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "col-form-label col-md-2" })
+
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Content, new { @class = "form-control" })
+
+            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
 
         </div>
-
     </div>
+    <div class="form-group row ">
+        @Html.LabelFor(model => model.Reviewer, htmlAttributes: new { @class = "col-form-label col-md-2" })
+
+        <div class="col-md-10">
+
+            @Html.EditorFor(model => model.Reviewer, new { htmlAttriibutes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Reviewer, "", new { @class = " text-danger" })
+
+        </div>
+    </div>
+
+    <div class="form-group ">
+        <div class="offset-md-2 col-md-10">
+            <input type="submit" value="Save" class=" btn btn-outline-success" />
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to Review List", "Index")
+</div>
+
+@section scripts
+{
+    <script src="~/Plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+    <link href="~/Plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script> 
+
+    <script>
+        //$(document).ready(function () {
+        $(function () {
+            $('#tbDate').datepicker({
+                autoclose: true,
+                todayHighlight: true,
+                orientation: "bottom auto",
+                format: "yyyy/mm/dd"
+                //,language: "tr"
+            });
+        });</script>
 }
