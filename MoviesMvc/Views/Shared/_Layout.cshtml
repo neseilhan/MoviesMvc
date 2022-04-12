@@ -13,19 +13,18 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
 </head>
 <body>
 
 
     <div>
 
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark  ">
+        <nav class="navbar  navbar-inverse bg-dark navbar-dark  ">
             <!-- Brand/logo -->
 
-            <a class="navbar-brand" href="~/"><i class="active fa fa-lg fa-home"></i> Movies MVC</a>
+            <a class="navbar-brand" href="#"><i class="active fa fa-lg fa-home"></i> Movies MVC</a>
 
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#myNavbar">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -34,17 +33,17 @@
                 <ul class="nav navbar-nav" mr-auto>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li class="nav-item active">
+                        <li class="nav-item">
                             <a class="nav-link" href="~/Movies/List"><i class="fa fa-film"> </i> Movie List</a>
                         </li>
 
                     }
 
-                    <li>
+                    <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Index", "Directors")"><i class="fa fa-users"></i> Director List</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Index","Reviews")"><i class="fa fa-lightbulb"></i> Review List</a>
+                        <a class="nav-link" href="@Url.Action("Index","Reviews")"><i class="fa fa-lightbulb"></i> Review List  </a>
                     </li>
 
                 </ul>
@@ -79,20 +78,24 @@
     </div>
 
 
-    @*@Scripts.Render("~/bundles/jquery")*@
-    @*@Scripts.Render("~/bundles/bootstrap")*@
+    @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")*@
 
 
     <script src="~/Scripts/jquery-3.6.0.min.js"></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
 
     @RenderSection("scripts", required: false)
 
+    <script>
+        $(".navbar-collapse a").click(function () {
+            $(".navbar-collapse").collapse("hide");
+        });
+    </script>
+
 </body>
+
 </html>

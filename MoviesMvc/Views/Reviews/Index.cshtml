@@ -15,30 +15,34 @@
 
     <h5 class="text-secondary">@Model.Count reviews found.</h5>
 
-    @Html.AntiForgeryToken()
 
     using (@Html.BeginForm("Delete", "Reviews", FormMethod.Post, new { id = "fReviews" }))
     {
+        @Html.AntiForgeryToken()
+
         @Html.Hidden("id", null, new { id = "hfReviewId" })
 
         <table id="reviews" class="display" style="width: 100%;">
-
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().Movie.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().Reviewer)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().Rating)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().DateText)
-                </th>
-                <th></th>
-            </tr>
-
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Movie.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Reviewer)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Rating)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().DateText)
+                    </th>      
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Content)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
 
             <tbody>
                 @foreach (var item in Model)
@@ -56,6 +60,15 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.DateText)
                         </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Content)
+                        </td>
+                        <td style="width: 8%; text-align: right;">
+                            @Html.ActionLink("Edit", "Edit", new { @class = "fa fa - plus" }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "aDelete", id = item.Id })
+
+                        </td>
                     </tr>
 
                 }
@@ -70,12 +83,12 @@ else
 }
 @section scripts
 {
-    <link href="~/Plugins/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
-    <script src="~/Plugins/DataTables/js/jquery.dataTables.min.js"></script>
+    <link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
 
-    <link href="~/Plugins/AlertifyJS/css/alertify.min.css" rel="stylesheet" />
-    <link href="~/Plugins/AlertifyJS/css/themes/bootstrap.min.css" rel="stylesheet" />
-    <script src="~/Plugins/AlertifyJS/alertify.min.js"></script>
+    <link href="~/Content/alertify.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/alertify.min.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -110,7 +123,7 @@ else
 
                         $('#fReviews').submit();
                     },
-                    function () {
+                    function () { //Cancel fonksiyonu
 
 
                     }).set("labels", { ok: "Yes", cancel: "No" });
