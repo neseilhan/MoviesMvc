@@ -19,10 +19,10 @@
 
     <div>
 
-        <nav class="navbar  navbar-inverse bg-dark navbar-dark  ">
+        <nav class="navbar  navbar-inverse bg-dark navbar-dark ">
             <!-- Brand/logo -->
 
-            <a class="navbar-brand" href="#"><i class="active fa fa-lg fa-home"></i> Movies MVC</a>
+            <a class="navbar-brand " href="#"><i class="active fa fa-lg fa-home"></i> Movies MVC</a>
 
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -30,7 +30,16 @@
 
 
             <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav" mr-auto>
+
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </div>
+                <ul class="nav navbar-nav " mr-auto>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">
@@ -49,15 +58,17 @@
                 </ul>
 
                 @*@if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-                    {
-                       <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "MoviesReport")><i class="fa fa-users"></i></a>
+        {
+           <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "MoviesReport")><i class="fa fa-users"></i></a>
 
-                        </li>
-                    }*@
+            </li>
+        }*@
 
                 @Html.Partial("_LoginPartial")
             </div>
+
+      
         </nav>
 
         <div class="container body-content">

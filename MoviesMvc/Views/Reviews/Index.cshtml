@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "Review List";
 }
+<link href="~/Content/alertify.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 
 <h2>Review List</h2>
 
@@ -22,6 +24,7 @@
 
         @Html.Hidden("id", null, new { id = "hfReviewId" })
 
+
         <table id="reviews" class="display" style="width: 100%;">
             <thead>
                 <tr>
@@ -36,7 +39,7 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().DateText)
-                    </th>      
+                    </th>
                     <th>
                         @Html.DisplayNameFor(model => model.FirstOrDefault().Content)
                     </th>
@@ -64,9 +67,9 @@
                             @Html.DisplayFor(modelItem => item.Content)
                         </td>
                         <td style="width: 8%; text-align: right;">
-                            @Html.ActionLink("Edit", "Edit", new { @class = "fa fa - plus" }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "aDelete", id = item.Id })
+                            <i class="fa fa-pencil-square-o"></i> @Html.ActionLink("Edit", "Edit", new { @class = "fa fa - plus" }) 
+                            <i class="fa fa-info-circle"></i>  @Html.ActionLink("Details", "Details", new { id = item.Id }) 
+                            <i class="fa fa-trash"></i>  @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "aDelete", id = item.Id })
 
                         </td>
                     </tr>
@@ -85,10 +88,9 @@ else
 {
     <link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="~/Scripts/jquery.dataTables.min.js"></script>
-
-    <link href="~/Content/alertify.min.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="~/Scripts/alertify.min.js"></script>
+
+
 
     <script>
         $(document).ready(function () {

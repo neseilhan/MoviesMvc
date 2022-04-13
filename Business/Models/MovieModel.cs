@@ -38,7 +38,7 @@ namespace MoviesMvc.Models
                 {
                     foreach (DirectorModel directorModel in Directors)
                     {
-                        _directorNamesHtml += directorModel.Name + "" + directorModel.Surname + "<br />";
+                        _directorNamesHtml += directorModel.Name + "" + directorModel.Surname /*+ "<br />"*/;
                     }
 
                 }

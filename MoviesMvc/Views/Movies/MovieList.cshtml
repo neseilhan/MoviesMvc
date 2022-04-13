@@ -3,6 +3,8 @@
 @{ ViewBag.Title = "Movie List"; }
 
 <h2>@ViewBag.Title</h2>
+<link href="~/Plugins/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
+
 
 <h5 class="text-secondary">@Model.Count movies found.</h5>
 
@@ -16,61 +18,69 @@
     @TempData["Message"]
 
 
-    
-</p>
-}
+
+</p>}
 <a href="/Movies/Create"> <i class="fa fa-plus"></i> New Movie</a>
-<table class="table">
 
-    
-    <tr>
-        <th>
-            Name
-        </th>
-        <th>
-            Production Year
-        </th>
-        <th>
-            Box Office Return
-        </th>
-        <th>
-            Directors
-        </th>
+<div class="table-responsive"> @*olmasa da olur.*@
+    <table id="movies" class="display" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().ProductionYear)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().BoxOfficeReturn)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().DirectorNamesHtml)
+                </th>
 
-    </tr>
-    @foreach (MovieModel movie in Model)
-    {
+                <th></th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
 <tr>
     <td>
-        @movie.Name
+        @Html.DisplayFor(modelItem => item.Name)
     </td>
     <td>
-        @movie.ProductionYear
+        @Html.DisplayFor(modelItem => item.BoxOfficeReturn)
     </td>
     <td>
-        @movie.BoxOfficeReturn
+        @Html.DisplayFor(modelItem => item.ProductionYear)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DirectorNamesHtml)
     </td>
 
     <td>
-
-        @{ string directors = "";
-            foreach (DirectorModel director in movie.Directors)
-            {
-                directors += "<i>" + director.Name + " " + director.Surname + "</i><br />";
-            } }
-        @Html.Raw(directors)
+        <i class="fa fa-pencil-square-o"></i> @Html.ActionLink("Edit", "Edit", new { id = item.Id, @class = "" })   |
+        <i class="fa fa-info-circle"></i>  @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+        <i class="fa fa-trash"></i>  @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "aDelete", id = item.Id })
     </td>
 
+</tr>
+}
+    </table>
+</div>
+@section scripts
+{
+    <script src="~/Scripts/jquery-3.6.0.js"></script>
+    <script src="~/Plugins/DataTables/js/jquery.dataTables.js"></script>
+    <script src="~/Plugins/DataTables/js/dataTables.bootstrap.js"></script>
 
-    <td>
+    <script>
 
-  
-        <i class="fa fa-pencil-square-o"></i> @Html.ActionLink("Edit", "Edit", new { id = movie.Id, @class = "fa fa-pencil-square-o" })   |
-        <i class="fa fa-info-circle"></i>  @Html.ActionLink("Details", "Details", new { id = movie.Id }) |
-        <i class="fa fa-trash"></i>  @Html.ActionLink("Delete", "Delete", new { id = movie.Id })
-    </td>
 
-</tr>}
-</table>
-@*</div>*@
+        $(document).ready(function () {
+            $('#movies').DataTable();
+        });
+
+    </script>
+}
 

@@ -29,13 +29,15 @@ namespace MoviesMvc.Controllers
         {
             //    List<Movie> movies = _db.Movies.ToList(); //filmleri veritabanından çek
             //    return View(movies); // view a gönder.
-            if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Action");
-            List<Movie> movies = _db.Movies.ToList();
-            return View(movies);
 
-           
+            if (!User.Identity.IsAuthenticated) 
+
+                return RedirectToAction("Login", "Action");
+                List<Movie> movies = _db.Movies.ToList();
+                return View(movies);
+  
         }
+
         public ActionResult List()
         {
             try

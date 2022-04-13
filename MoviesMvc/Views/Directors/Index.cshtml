@@ -11,58 +11,61 @@
 @if (Model != null && Model.Count > 0)
 {
 <h5 class="text-secondary">@Model.Count directors found.</h5>
-                <table class="table">
-                    <tr>
-                        <th>
-                            @*@Html.DisplayNameFor(model => model.Name)*@
-                            @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.FirstOrDefault().Surname)
-                        </th>
-                        <th>
-                            @*@Html.DisplayNameFor(model => model.FirstOrDefault().Retired)  yerine*@
-                            @Html.DisplayNameFor(model => model.FirstOrDefault().RetiredText)
-                        </th>
 
-                        <th>
-                            @Html.DisplayNameFor(model => model.FirstOrDefault().MoviesText)
-                        </th>
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Name)*@
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Surname)
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.FirstOrDefault().Retired)  yerine*@
+                @Html.DisplayNameFor(model => model.FirstOrDefault().RetiredText)
+            </th>
 
-                    </tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().MoviesText)
+            </th>
 
-                    @foreach (var item in Model)
-                    {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Surname)
-        </td>
-        <td>
-            @*@Html.DisplayFor(modelItem => item.Retired)*@
-            @Html.DisplayFor(modeItem => item.RetiredText)
-        </td>
+        </tr>
 
-        <td>
-            @Html.Raw(item.MoviesText)
-        </td>
+        @foreach (var item in Model)
+        {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Surname)
+    </td>
+    <td>
+        @*@Html.DisplayFor(modelItem => item.Retired)*@
+        @Html.DisplayFor(modeItem => item.RetiredText)
+    </td>
 
-        <td style="width: 22%; text-align: right;">
+    <td>
+        @Html.Raw(item.MoviesText)
+    </td>
+
+    <td style="width: 22%; text-align: right;">
 
 
-            <a href="@Url.Action("Edit", new { id = item.Id })" title="Edit Director"><i class="fa fa-pencil-square-o"></i> Edit</a> |
+        <a href="@Url.Action("Edit", new { id = item.Id })" title="Edit Director"><i class="fa fa-pencil-square-o"></i> Edit</a> |
 
-            <a href="@Url.Action("Details", new { id = item.Id })" title="Director Details"><i class="fa fa-info-circle"></i> Details</a> |
+        <a href="@Url.Action("Details", new { id = item.Id })" title="Director Details"><i class="fa fa-info-circle"></i> Details</a> |
 
-            <a href="@Url.Action("Delete", new { id = item.Id })" title="Delete Director"><i class="fa fa-trash"></i> Delete</a>
-        </td>
-    </tr>
-}
+        <a href="@Url.Action("Delete", new { id = item.Id })" title="Delete Director"><i class="fa fa-trash"></i> Delete</a>
+    </td>
+</tr>}
 
-                </table>
- }
-            else
-            {
-<p class="text-secondary">No directors found.</p>}
+    </table>
+    </div>
+
+    }
+    else
+    {
+    <p class="text-secondary">No directors found.</p>}
